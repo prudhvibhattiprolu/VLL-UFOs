@@ -1,0 +1,23 @@
+import model VLLD_NLO
+generate p p > taup nup~ 
+add process p p > taup~ nup 
+output @@OUTPUT@@ 
+launch @@OUTPUT@@
+shower=off
+detector=off
+analysis=off
+done
+set iseed=1000
+set nevents @@NEVENTS@@
+set ebeam1 @@ENERGY@@
+set ebeam2 @@ENERGY@@
+set fixed_ren_scale=@@FIXEDSCALE@@
+set fixed_fac_scale=@@FIXEDSCALE@@
+set scale=@@SCALE@@
+set dsqrt_q2fact1=@@SCALE@@
+set dsqrt_q2fact2=@@SCALE@@
+#set pdlabel = lhapdf
+#set lhaid = 21100
+set mtaup=@@MASS@@ 
+set mnup=@@MASS@@
+done

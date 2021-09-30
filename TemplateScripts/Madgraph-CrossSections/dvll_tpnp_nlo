@@ -1,0 +1,23 @@
+import model VLLD_NLO
+generate p p > taup nup~ [QCD] 
+add process p p > taup~ nup [QCD]
+output @@OUTPUT@@ 
+launch @@OUTPUT@@
+order=NLO
+fixed_order=on
+shower=off
+done
+set iseed=1000
+set req_acc_FO=-1
+set nevents @@NEVENTS@@
+set ebeam1 @@ENERGY@@
+set ebeam2 @@ENERGY@@
+set fixed_fac_scale=@@FIXEDSCALE@@
+set fixed_ren_scale=@@FIXEDSCALE@@
+set muF_ref_fixed=@@SCALE@@ 
+set muR_ref_fixed=@@SCALE@@
+#set pdlabel = lhapdf
+#set lhaid = 21100
+set mtaup=@@MASS@@
+set mnup=@@MASS@@
+done

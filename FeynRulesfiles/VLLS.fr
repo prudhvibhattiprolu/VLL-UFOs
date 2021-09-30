@@ -1,0 +1,201 @@
+(***************************************************************************************************************)
+(******                       This is the FeynRules mod-file for Vectorlike leptons (Singlet Model)                      ******)
+(******                                                                                                   ******)
+(******     Authors: Prudhvi N. Bhattiprolu, Stephen P. Martin                                                     ******)
+(******                                                                                                   ******)
+(****** Choose whether Feynman gauge is desired.                                                          ******)
+(****** If set to False, unitary gauge is assumed.                                                          ****)
+(****** Feynman gauge is especially useful for CalcHEP/CompHEP where the calculation is 10-100 times faster. ***)
+(****** Feynman gauge is not supported in MadGraph and Sherpa.                                              ****)
+(***************************************************************************************************************)
+
+(* ************************** *)
+(* *****  Information   ***** *)
+(* ************************** *)
+M$ModelName = "Singlet VLL";
+
+M$Information = {
+  Authors      -> {"Prudhvi N. Bhattiprolu", "Stephen P. Martin"}, 
+  Version      -> "1.0",
+  Date         -> "05. 05. 2019",
+  Institutions -> {"Northern Illinois University"},
+  Emails       -> {"pbhattiprolu@niu.edu", "spmartin@niu.edu"},
+  URLs         -> ""
+};
+
+
+(* ************************** *)
+(* **** Particle classes **** *)
+(* ************************** *)
+M$ClassesDescription = {
+
+(* Vector Like Lepton L (singlet/doublet), T_3 = 0/(-1/2), Q = -1 *)
+
+  F[17] == {
+  ClassName -> tauprime,
+  ClassMembers -> {taup},
+  SelfConjugate -> False,
+  Indices -> {},
+  Mass -> {{MTAUP,300}},
+  Width -> {{WTAUP,1}},
+  QuantumNumbers -> {Q -> -1,LeptonNumber -> 1},
+  PropagatorLabel -> {"taup"},
+  PropagatorType -> Straight,
+  ParticleName -> {"taup"},
+  AntiParticleName -> {"taup~"},
+  PropagatorArrow -> Forward,
+  PDG -> {17},
+  FullName -> {"tau prime"}
+  },
+
+(* Vector Like Lepton nu prime (doublet), T_3 = 1/2, Q = 0 *)
+  
+  F[18] == {
+  ClassName -> nuprime,
+  ClassMembers -> {nup},
+  SelfConjugate -> False,
+  Indices -> {},
+  Mass -> {{MNUP,300}},
+  Width -> {{WNUP,1}},
+  QuantumNumbers -> {Q -> 0,LeptonNumber -> 1},
+  PropagatorLabel -> {"nup"},
+  PropagatorType -> Straight,
+  ParticleName -> {"nup"},
+  AntiParticleName -> {"nup~"},
+  PropagatorArrow -> Forward,
+  PDG -> {18},
+  FullName -> {"nu prime"}
+  }
+};
+
+
+
+(* ************************** *)
+(* *****   Parameters   ***** *)
+(* ************************** *)
+M$Parameters = {
+
+(** External parameters, VLL **)
+
+  Tl == {
+        ParameterType -> External,
+        BlockName -> Isospin,
+        Value -> 0,
+  	Description -> "Weak Isospin of tau prime (taup))"},
+
+  gtaupveLw == {
+	ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0,
+        InteractionOrder -> {VLL, 1},
+        Description -> "taup ve W coupling"},
+
+  gtaupvmLw == {
+        ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0,
+        InteractionOrder -> {VLL, 1},
+        Description -> "taup vm W coupling"},
+
+  gtaupvtLw == {
+        ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0.1,
+        InteractionOrder -> {VLL, 1},
+        Description -> "taup vt W coupling"},
+
+  gtaupeLz == {
+        ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0,
+        InteractionOrder -> {VLL, 1},
+        Description -> "taup e Z coupling"},
+
+  gtaupmuLz == {
+        ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0,
+        InteractionOrder -> {VLL, 1},
+        Description -> "LmuZ coupling"},
+
+  gtauptaLz == {
+        ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0.1,
+        InteractionOrder -> {VLL, 1},
+        Description -> "LtaZ coupling"},
+
+  gtaupeLh == {
+        ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0,
+        InteractionOrder -> {VLL, 0},
+        Description -> "LeH coupling (right-handed)"},
+
+  gtaupmuLh == {
+        ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0,
+        InteractionOrder -> {VLL, 0},
+        Description -> "LmuH coupling (right-handed)"},
+
+  gtauptaLh == {
+        ParameterType -> External,
+        BlockName -> Couplings,
+        Value -> 0.1,
+        InteractionOrder -> {VLL, 0},
+        Description -> "LtaH coupling (right-handed)"},
+
+
+
+(************** Internal Parameters, VLL **************)
+   
+  gtaupb == { 
+	ParameterType    -> Internal, 
+	Value            -> g1*(-1-Tl), 
+	InteractionOrder -> {VLL, 1},
+	Description      -> "B coupling for L"},
+
+  gnupb == { 
+	ParameterType    -> Internal, 
+	Value            -> g1*Tl, 
+	InteractionOrder -> {VLL, 1},
+	Description      -> "B coupling for V"},
+  
+  gtaupnupw3 == { 
+	ParameterType    -> Internal, 
+	Value            -> gw*Tl, 
+	InteractionOrder -> {VLL, 1},
+	Description      -> "W3 coupling for L and V"},
+
+  gwtaupnup == { 
+	ParameterType    -> Internal, 
+	Value            -> -Sqrt[2]*gw*Tl, 
+	InteractionOrder -> {VLL, 1},
+	Description      -> "W coupling for L and V"}
+
+};
+
+(* ************************** *)
+(* *****   Lagrangian   ***** *)
+(* ************************** *)
+
+(********* VLL Lagrangians *******)
+    
+LTAUPKINETIC := I taupbar.Ga[mu].del[taup, mu];
+
+LTAUPMASS := -MTAUP taupbar.taup;
+
+
+LVLLPRODUCTION := gtaupb*(taupbar.Ga[mu].taup).B[mu]+gnupb*(nupbar.Ga[mu].nup).B[mu]-gtaupnupw3*((nupbar.Ga[mu].nup).Wi[mu,3]-(taupbar.Ga[mu].taup).Wi[mu,3])+gwtaupnup*((nupbar.Ga[mu].taup).W[mu]+(taupbar.Ga[mu].nup).Wbar[mu])
+
+LTAUPDECAYW :=gtaupveLw*(taupbar.Wbar[mu].Ga[mu].ProjM.ve)+gtaupveLw*(vebar.W[mu].Ga[mu].ProjM.taup)+gtaupvmLw*(taupbar.Wbar[mu].Ga[mu].ProjM.vm)+gtaupvmLw*(vmbar.W[mu].Ga[mu].ProjM.taup)+gtaupvtLw*(taupbar.Wbar[mu].Ga[mu].ProjM.vt)+gtaupvtLw*(vtbar.W[mu].Ga[mu].ProjM.taup);
+
+LTAUPDECAYZ := gtaupeLz*(taupbar.Z[mu].Ga[mu].ProjM.e)+gtaupeLz*(ebar.Z[mu].Ga[mu].ProjM.taup)+gtaupmuLz*(taupbar.Z[mu].Ga[mu].ProjM.mu)+gtaupmuLz*(mubar.Z[mu].Ga[mu].ProjM.taup)+gtauptaLz*(taupbar.Z[mu].Ga[mu].ProjM.ta)+gtauptaLz*(tabar.Z[mu].Ga[mu].ProjM.taup);
+
+LTAUPDECAYH:=-MTAUP*gtaupeLh*(taupbar.H.ProjM.e)/vev-MTAUP*gtaupeLh*(ebar.H.ProjP.taup)/vev-MTAUP*gtaupmuLh*(taupbar.H.ProjM.mu)/vev-MTAUP*gtaupmuLh*(mubar.H.ProjP.taup)/vev-MTAUP*gtauptaLh*(taupbar.H.ProjM.ta)/vev-MTAUP*gtauptaLh*(tabar.H.ProjP.taup)/vev;
+
+
+LVLL :=  LTAUPKINETIC + LTAUPMASS + LVLLPRODUCTION + LTAUPDECAYW + LTAUPDECAYZ + LTAUPDECAYH; 
+
+L := LSM + LVLL ;
