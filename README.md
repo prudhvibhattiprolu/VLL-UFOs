@@ -122,7 +122,7 @@ Below is an example MadGraph-script to calculate LO production cross-section for
 
 **Also, by default MadGraph sets `pdlabel` to `nn23lo1` (MadGraph's default PDFs based on NNPDF2.3 set) for LO calculations. `pdlabel` should be set to `lhapdf` to gain access to many other PDFs with `lhaid` listed in https://lhapdf.hepforge.org/pdfsets.html**
 
-#### Template scripts to compute cross-sections in `TemplateScripts/xsec` folder:
+#### Template scripts to compute cross-sections in `TemplateScripts/Madgraph-CrossSections` folder:
 
 ##### File names:
 
