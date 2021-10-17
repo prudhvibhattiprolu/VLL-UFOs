@@ -18,5 +18,4 @@ set dsqrt_q2fact2=@@SCALE@@
 #set pdlabel = lhapdf
 #set lhaid = 21100
 set mtaup=@@MASS@@ 
-set mnup=@@MASS@@
 done

@@ -1,6 +1,6 @@
 # Model files for vectorlike leptons
 
-This repository has FeynRules and Universal FeynRules Output (UFO) model files for vectorlike leptons (VLL) along with template scripts to compute cross-sections at LO or NLO (in QCD).
+This repository has FeynRules and Universal FeynRules Output (UFO) model files for vectorlike leptons (VLL) along with template scripts to compute pair-production cross-sections at p p colliders at LO or NLO (in QCD).
 
 ## Files  
 **FeynRules model files in `FeynRulesfiles` folder:**
@@ -21,7 +21,7 @@ For details on the Singlet and Doublet VLL models, see Refs. [1] and [2].
 
 ## Importing UFO model file into MadGraph:
 
-**Before importing into MadGraph, the UFO model files should be moved to `<path to MadGraph>/models/`**
+(Before importing into MadGraph, the UFO model files should be moved to `<path to MadGraph>/models/`)
 
 The model files are compatible with Madgraph version v2 that was built on python2, but should also work with the latest Madgraph v3 that uses python3. In order to use Madgraph v3, these model files can be made compatible with python3 by doing :
 
@@ -51,13 +51,9 @@ In these VLL models,
 #### Masses:
 
 `MTAUP` : mass of taup particle
-`MNUP` : mass of nup particle
+`MNUP` : mass of nup particle (internal parameter set equal to`MTAUP`)
 
-#### Widths:
-`WTAUP` : width of taup
-`WNUP` : width of nup
-
-**Note: These widths are set to 1 GeV. This should not matter if one forces the decay of these particles while generating events (see below).**
+Note: the widths of taup `WTAUP` and nup `WNUP` are internal parameters and are determined from the corresponding masses and the mixing parameters `epstaup*`.
 
 ## Pair-production of VLLs
 
@@ -115,14 +111,13 @@ Below is an example MadGraph-script to calculate LO production cross-section for
     #CHANGE PDF SET HERE
     set pdlabel = lhapdf
     set lhaid = 21100
-    #SYNCHRONIZED SCAN OVER MULTIPLE PARAMETERS CAN BE DONE USING *_scan1_* (INSTEAD OF *_scan_*)
-    set mtaup scan1:range(100,1100,100)
-    set mnup scan1:range(100,1100,100)
+    #SYNCHRONIZED SCAN OVER MULTIPLE PARAMETERS CAN BE DONE USING *scan*
+    set mtaup scan:range(100,1100,100)
     done
 
-**Note: By default MadGraph sets `fixed_ren_scale` and `fixed_fac_scale` to `False` (i.e. *dynamic* scale choice). They should be set to `True` to use *fixed* scales.**
+Note: By default MadGraph sets `fixed_ren_scale` and `fixed_fac_scale` to `False` (i.e. *dynamic* scale choice). They should be set to `True` to use *fixed* scales.
 
-**Also, by default MadGraph sets `pdlabel` to `nn23lo1` (MadGraph's default PDFs based on NNPDF2.3 set) for LO calculations. `pdlabel` should be set to `lhapdf` to gain access to many other PDFs with `lhaid` listed in https://lhapdf.hepforge.org/pdfsets.html**
+Also, by default MadGraph sets `pdlabel` to `nn23lo1` (MadGraph's default PDFs based on NNPDF2.3 set) for LO calculations. `pdlabel` should be set to `lhapdf` to gain access to many other PDFs with `lhaid` listed in https://lhapdf.hepforge.org/pdfsets.html
 
 #### Template scripts to compute cross-sections in `TemplateScripts/Madgraph-CrossSections` folder:
 
@@ -158,79 +153,33 @@ Below is an example MadGraph-script to calculate LO production cross-section for
 
 `@@MASS@@`: Mass of taup (= Mass of nup in Doublet VLL) in GeV
 
-
-
  (The folder `CrossSections` has the VLL pair-production cross-sections computed at both LO and NLO (in QCD) at 13 TeV LHC using Madgraph’s default PDFs (different for LO and NLO calculations as mentioned in the files) and default dynamic scale for masses M = 100 to 1000 GeV in steps of 10 GeV for LO and 5 GeV for NLO.)
 
 ## Other models where VLLs mix with e or mu
 
-By default, in the model files, the VLLs are assumed to mix only with the taus. But, VLLs can also be made to mix only with e or mu by changing the relevant couplings (`gtaup*` and `gnup*`”) in the couplings block of “param_card.dat” (while running Madgraph interactively or through a script). For VLLs mixing only with muons, for example, set:
+By default, in the model files, the VLLs are assumed to mix only with the taus. But, VLLs can also be made to mix only with e or mu by changing the relevant couplings `epstaup*` in `Couplings` block of “param_card.dat” (while running Madgraph interactively or through a script). For VLLs mixing only with muons, for example, set:
 
 #### in doublet VLL model:
 
-(relevant for decay of tau prime to Z and e, mu, or tau)
-
 ```
-gtaupeRz = 0
+epstaupeR = 0
 
-gtaupmuRz = 0.1
+epstaupmuR = 0.1
 
-gtauptaRz = 0
-```
-
-(relevant for decay of tau prime to Higgs and e, mu, or tau)
-
-```
-gtaupeRh = 0
-
-gtaupmuRh = 0.1
-
-gtauptaRh = 0
-```
-
-(relevant for decay of nu prime to W and e, mu, or tau)
-
-```
-gnupeRw = 0
-
-gnupmRw = 0.1
-
-gnuptRw = 0
+epsstauptaR = 0
 ```
 
 #### And, in the singlet VLL model:
 
-(relevant for decay of tau prime to W and ve, vmu, or vtau)
-
 ```
-gtaupveLw = 0
+epstaupeL = 0
 
-gtaupvmLw = 0.1
+epstaupmuL = 0.1
 
-gtaupvtLw = 0
+epsstauptaL = 0
 ```
 
-(relevant for decay of tau prime to Z and e, mu, or tau)
-
-```
-gtaupeLz = 0
-
-gtaupmuLz = 0.1
-
-gtauptaLz = 0
-```
-
-(relevant for decay of tau prime to Higgs and e, mu, or tau)
-
-```
-gtaupeLh  = 0
-
-gtaupmuLh = 0.1
-
-gtauptaLh = 0
-```
-
-**Note: The value `0.1` for the couplings `gtaup*` and `gnup*` is not physically relevant (except that it is non-zero) while generating signal events since in the analysis the VLL pair-production cross-sections are multiplied by the appropriate branching ratios of the VLL.**
+Note: The value `0.1` for the couplings `epstaup*` is not physically relevant (except that it is small and non-zero) while generating signal events since in the analysis the VLL pair-production cross-sections are multiplied by the appropriate branching ratios of the VLL.
 
 
 

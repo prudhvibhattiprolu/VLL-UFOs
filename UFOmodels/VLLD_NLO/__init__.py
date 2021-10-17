@@ -46,5 +46,5 @@ gauge = [0, 1]
 
 
 __author__ = "Prudhvi N. Bhattiprolu, Stephen P. Martin"
-__date__ = "05. 05. 2019"
-__version__= "1.0"
+__date__ = "10. 17. 2021"
+__version__= "2.0"

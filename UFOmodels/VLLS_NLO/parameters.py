@@ -1,6 +1,6 @@
 # This file was automatically created by FeynRules 2.3.35
 # Mathematica version: 12.0.0 for Mac OS X x86 (64-bit) (April 7, 2019)
-# Date: Thu 30 Sep 2021 10:08:01
+# Date: Sun 17 Oct 2021 14:25:00
 
 
 
@@ -26,85 +26,29 @@ MU_R = Parameter(name = 'MU_R',
                  lhacode = [1])
 
 # User-defined parameters.
-gtaupveLw = Parameter(name = 'gtaupveLw',
+epstaupeL = Parameter(name = 'epstaupeL',
                       nature = 'external',
                       type = 'real',
                       value = 0,
-                      texname = '\\text{gtaupveLw}',
+                      texname = '\\text{epstaupeL}',
                       lhablock = 'Couplings',
                       lhacode = [ 1 ])
 
-gtaupvmLw = Parameter(name = 'gtaupvmLw',
-                      nature = 'external',
-                      type = 'real',
-                      value = 0,
-                      texname = '\\text{gtaupvmLw}',
-                      lhablock = 'Couplings',
-                      lhacode = [ 2 ])
+epstaupmuL = Parameter(name = 'epstaupmuL',
+                       nature = 'external',
+                       type = 'real',
+                       value = 0,
+                       texname = '\\text{epstaupmuL}',
+                       lhablock = 'Couplings',
+                       lhacode = [ 2 ])
 
-gtaupvtLw = Parameter(name = 'gtaupvtLw',
-                      nature = 'external',
-                      type = 'real',
-                      value = 0.1,
-                      texname = '\\text{gtaupvtLw}',
-                      lhablock = 'Couplings',
-                      lhacode = [ 3 ])
-
-gtaupeLz = Parameter(name = 'gtaupeLz',
-                     nature = 'external',
-                     type = 'real',
-                     value = 0,
-                     texname = '\\text{gtaupeLz}',
-                     lhablock = 'Couplings',
-                     lhacode = [ 4 ])
-
-gtaupmuLz = Parameter(name = 'gtaupmuLz',
-                      nature = 'external',
-                      type = 'real',
-                      value = 0,
-                      texname = '\\text{gtaupmuLz}',
-                      lhablock = 'Couplings',
-                      lhacode = [ 5 ])
-
-gtauptaLz = Parameter(name = 'gtauptaLz',
-                      nature = 'external',
-                      type = 'real',
-                      value = 0.1,
-                      texname = '\\text{gtauptaLz}',
-                      lhablock = 'Couplings',
-                      lhacode = [ 6 ])
-
-gtaupeLh = Parameter(name = 'gtaupeLh',
-                     nature = 'external',
-                     type = 'real',
-                     value = 0,
-                     texname = '\\text{gtaupeLh}',
-                     lhablock = 'Couplings',
-                     lhacode = [ 7 ])
-
-gtaupmuLh = Parameter(name = 'gtaupmuLh',
-                      nature = 'external',
-                      type = 'real',
-                      value = 0,
-                      texname = '\\text{gtaupmuLh}',
-                      lhablock = 'Couplings',
-                      lhacode = [ 8 ])
-
-gtauptaLh = Parameter(name = 'gtauptaLh',
-                      nature = 'external',
-                      type = 'real',
-                      value = 0.1,
-                      texname = '\\text{gtauptaLh}',
-                      lhablock = 'Couplings',
-                      lhacode = [ 9 ])
-
-Tl = Parameter(name = 'Tl',
-               nature = 'external',
-               type = 'real',
-               value = 0,
-               texname = '\\text{Tl}',
-               lhablock = 'Isospin',
-               lhacode = [ 1 ])
+epstauptaL = Parameter(name = 'epstauptaL',
+                       nature = 'external',
+                       type = 'real',
+                       value = 0.1,
+                       texname = '\\text{epstauptaL}',
+                       lhablock = 'Couplings',
+                       lhacode = [ 3 ])
 
 aEWM1 = Parameter(name = 'aEWM1',
                   nature = 'external',
@@ -170,14 +114,6 @@ MTAUP = Parameter(name = 'MTAUP',
                   lhablock = 'MASS',
                   lhacode = [ 17 ])
 
-MNUP = Parameter(name = 'MNUP',
-                 nature = 'external',
-                 type = 'real',
-                 value = 300,
-                 texname = '\\text{MNUP}',
-                 lhablock = 'MASS',
-                 lhacode = [ 18 ])
-
 WZ = Parameter(name = 'WZ',
                nature = 'external',
                type = 'real',
@@ -210,21 +146,11 @@ WH = Parameter(name = 'WH',
                lhablock = 'DECAY',
                lhacode = [ 25 ])
 
-WTAUP = Parameter(name = 'WTAUP',
-                  nature = 'external',
-                  type = 'real',
-                  value = 1,
-                  texname = '\\text{WTAUP}',
-                  lhablock = 'DECAY',
-                  lhacode = [ 17 ])
-
-WNUP = Parameter(name = 'WNUP',
-                 nature = 'external',
-                 type = 'real',
-                 value = 1,
-                 texname = '\\text{WNUP}',
-                 lhablock = 'DECAY',
-                 lhacode = [ 18 ])
+Tl = Parameter(name = 'Tl',
+               nature = 'internal',
+               type = 'real',
+               value = '0',
+               texname = '\\text{Tl}')
 
 aEW = Parameter(name = 'aEW',
                 nature = 'internal',
@@ -256,6 +182,12 @@ sw2 = Parameter(name = 'sw2',
                 value = '1 - MW**2/MZ**2',
                 texname = '\\text{sw2}')
 
+WTAUP = Parameter(name = 'WTAUP',
+                  nature = 'internal',
+                  type = 'real',
+                  value = '((epstaupeL**2 + epstaupmuL**2 + epstauptaL**2)*MTAUP*((1 - MH**2/MTAUP**2)**2 + 2*(1 - MW**2/MTAUP**2)**2*(1 + (2*MW**2)/MTAUP**2) + (1 - MZ**2/MTAUP**2)**2*(1 + (2*MZ**2)/MTAUP**2)))/(64.*cmath.pi)',
+                  texname = '\\text{WTAUP}')
+
 cw = Parameter(name = 'cw',
                nature = 'internal',
                type = 'real',
@@ -286,29 +218,11 @@ vev = Parameter(name = 'vev',
                 value = '(2*MW*sw)/ee',
                 texname = '\\text{vev}')
 
-gnupb = Parameter(name = 'gnupb',
-                  nature = 'internal',
-                  type = 'real',
-                  value = 'g1*Tl',
-                  texname = '\\text{gnupb}')
-
 gtaupb = Parameter(name = 'gtaupb',
                    nature = 'internal',
                    type = 'real',
                    value = 'g1*(-1 - Tl)',
                    texname = '\\text{gtaupb}')
-
-gtaupnupw3 = Parameter(name = 'gtaupnupw3',
-                       nature = 'internal',
-                       type = 'real',
-                       value = 'gw*Tl',
-                       texname = '\\text{gtaupnupw3}')
-
-gwtaupnup = Parameter(name = 'gwtaupnup',
-                      nature = 'internal',
-                      type = 'real',
-                      value = '-(gw*Tl*cmath.sqrt(2))',
-                      texname = '\\text{gwtaupnup}')
 
 lam = Parameter(name = 'lam',
                 nature = 'internal',

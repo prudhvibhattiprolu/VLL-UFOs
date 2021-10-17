@@ -1,6 +1,6 @@
 # This file was automatically created by FeynRules 2.3.35
 # Mathematica version: 12.0.0 for Mac OS X x86 (64-bit) (April 7, 2019)
-# Date: Thu 30 Sep 2021 10:08:01
+# Date: Sun 17 Oct 2021 14:25:00
 
 
 from __future__ import division
@@ -400,20 +400,4 @@ taup = Particle(pdg_code = 17,
                 Y = 0)
 
 taup__tilde__ = taup.anti()
-
-nup = Particle(pdg_code = 18,
-               name = 'nup',
-               antiname = 'nup~',
-               spin = 2,
-               color = 1,
-               mass = Param.MNUP,
-               width = Param.WNUP,
-               texname = 'nup',
-               antitexname = 'nup~',
-               charge = 0,
-               GhostNumber = 0,
-               LeptonNumber = 1,
-               Y = 0)
-
-nup__tilde__ = nup.anti()
 
